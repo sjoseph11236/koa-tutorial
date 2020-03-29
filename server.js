@@ -31,10 +31,12 @@ render(app, {
   cache: false, 
   debug: false
 });
+
 // Routes
 router.get('/', index);
 router.get('/add', showAdd);
 router.post('/add', add);
+
 
 
 async function index(ctx) {
@@ -69,8 +71,9 @@ async function add(ctx) {
 // Index
 // router.get('/', async ctx => await ctx.render('index'));
 
-router.get('/test', ctx => ( ctx.body = `Hello ${ctx.user}`));
-router.get('/test/:name', ctx => ( ctx.body = `Hello ${ctx.params.name}`));
+// Use params and adding props to ctx
+// router.get('/test', ctx => ( ctx.body = `Hello ${ctx.user}`));
+// router.get('/test/:name', ctx => ( ctx.body = `Hello ${ctx.params.name}`));
 
 // Router Middleware
 app.use(router.routes()).use(router.allowedMethods());
