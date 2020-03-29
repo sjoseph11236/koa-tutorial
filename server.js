@@ -42,6 +42,12 @@ router.get('/', index);
 router.get('/add', showAdd);
 router.post('/add', add);
 
+//Require the Router we defined in movies.js
+var movies = require('./api/movies');
+
+//Use the Router on the sub route /movies
+app.use(movies.routes());
+
 
 
 async function index(ctx) {
@@ -50,6 +56,14 @@ async function index(ctx) {
     things: things 
   });
 };
+
+// Synchornous has to return
+// function index(ctx) {
+//   return ctx.render('index', {
+//     title: "Things I Love:",
+//     things: things 
+//   });
+// };
 
 // Show add page
 async function showAdd(ctx) {
