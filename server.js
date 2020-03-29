@@ -10,6 +10,7 @@ const router = new KoaRouter();
 
 const PORT = 3000; 
 // Replace with DB
+const things  = ['My Family', 'Programming', 'Music'];
 
 // JSON Prettier Middleware
 app.use(json());
@@ -24,12 +25,38 @@ render(app, {
   cache: false, 
   debug: false
 });
+// Routes
+router.get('/', index);
+router.get('/add', showAdd);
+router.post('/add', add);
 
-router.get('/', async ctx => {
-  await ctx.render('index', {
-    title: "Things I Love:"
+
+async function index(ctx) {
+    await ctx.render('index', {
+    title: "Things I Love:",
+    things: things 
   });
-});
+};
+
+// Show add page
+async function showAdd(ctx) {
+    await ctx.render('add');
+};
+
+// Add thing
+async function add() {
+  
+}
+
+// router.get('/', async ctx => {
+//   await ctx.render('index', {
+//     title: "Things I Love:",
+//     things: things 
+//   });
+// });
+
+
+
 
 // Index
 router.get('/', async ctx => await ctx.render('index'));
