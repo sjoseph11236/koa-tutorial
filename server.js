@@ -4,19 +4,24 @@ const json = require('koa-json');
 const path = require('path');
 const render = require('koa-ejs');
 const bodyParser = require('koa-bodyparser');
+const logger = require('koa-logger');
 
 //  Intialize app.
 const app = new Koa();
 const router = new KoaRouter();
 
 const PORT = 3000; 
-// Replace with DB
-const things  = ['My Family', 'Programming', 'Music'];
-
+// Logger Middleware
+app.use(logger());
 // JSON Prettier Middleware
 app.use(json());
 // Body Parser Middleware
 app.use(bodyParser());
+
+
+// Replace with DB
+const things  = ['My Family', 'Programming', 'Music'];
+
 
 // Add addition properties to context
 app.context.user = 'Sayeed';
@@ -65,12 +70,8 @@ async function add(ctx) {
 //   });
 // });
 
-
-
-
 // Index
 // router.get('/', async ctx => await ctx.render('index'));
-
 // Use params and adding props to ctx
 // router.get('/test', ctx => ( ctx.body = `Hello ${ctx.user}`));
 // router.get('/test/:name', ctx => ( ctx.body = `Hello ${ctx.params.name}`));
