@@ -3,6 +3,7 @@ const KoaRouter = require('koa-router');
 const json = require('koa-json');
 const path = require('path');
 const render = require('koa-ejs');
+const bodyParser = require('koa-bodyparser');
 
 //  Intialize app.
 const app = new Koa();
@@ -14,6 +15,11 @@ const things  = ['My Family', 'Programming', 'Music'];
 
 // JSON Prettier Middleware
 app.use(json());
+// Body Parser Middleware
+app.use(bodyParser());
+
+// Add addition properties to context
+app.context.user = 'Sayeed';
 
 // Simple Middlware Examples
 // app.use(async ctx => ctx.body = 'Hello World!');
@@ -44,8 +50,10 @@ async function showAdd(ctx) {
 };
 
 // Add thing
-async function add() {
-  
+async function add(ctx) {
+  const body = ctx.request.body;
+  things.push(body.thing);
+  ctx.redirect('/');
 }
 
 // router.get('/', async ctx => {
@@ -59,9 +67,10 @@ async function add() {
 
 
 // Index
-router.get('/', async ctx => await ctx.render('index'));
+// router.get('/', async ctx => await ctx.render('index'));
 
-router.get('/test', ctx => ( ctx.body = "Hello Test"));
+router.get('/test', ctx => ( ctx.body = `Hello ${ctx.user}`));
+router.get('/test/:name', ctx => ( ctx.body = `Hello ${ctx.params.name}`));
 
 // Router Middleware
 app.use(router.routes()).use(router.allowedMethods());
